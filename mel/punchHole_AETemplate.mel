@@ -1,0 +1,26 @@
+global proc AEpunchHoleTemplate( string $nodeName )
+{
+	editorTemplate -beginScrollLayout;
+
+	editorTemplate -beginLayout "Main control" -collapse 0;
+	editorTemplate -addControl "offset";
+	editorTemplate -addControl "rotate";
+	editorTemplate -addControl "reverseOrder";
+	editorTemplate -endLayout;
+
+	editorTemplate -beginLayout "Profile" -collapse 0;
+	editorTemplate -addControl "profilePresets";
+	editorTemplate -addControl "extrusionCount";
+	editorTemplate -addControl "extrusionOffset";
+	editorTemplate -addControl "normalOffset";
+	editorTemplate -endLayout;
+
+	editorTemplate -suppress "inMesh";
+	editorTemplate -suppress "outMesh";
+	editorTemplate -suppress "vertNum";
+
+	AEdependNodeTemplate $nodeName;
+
+	editorTemplate -addExtraControls;
+	editorTemplate -endScrollLayout;
+}
