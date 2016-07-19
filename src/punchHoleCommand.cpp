@@ -82,125 +82,178 @@ MStatus punchHoleCommand::assignSameMaterial(MDagPath& inputShapeDagPath, MObjec
 }
 
 
-
 MStatus punchHoleCommand::doIt( const MArgList& argList )
 {
 	MStatus status;
 
-    MArgDatabase argData( syntax(), argList, &status );
-    
-    MSelectionList selection;
-    argData.getObjects( selection );
-    
-    if (selection.length() == 0)
-    {
-        MGlobal::displayWarning("[punchHoleNode] Select 1 vertex component only...");
-        return::MStatus::kSuccess;
-    }
-    
+	MArgDatabase argData( syntax(), argList, &status );
 
-    // Global
-    MItSelectionList iter(selection);
-    
-    
-    MDagPath m_pathBaseMeshShape;
-    MObject component;
-    iter.getDagPath(m_pathBaseMeshShape, component);
-    
-    MGlobal::displayInfo(MString() + m_pathBaseMeshShape.partialPathName());
-    
-    
-    MItMeshVertex pIter(m_pathBaseMeshShape, component, &status);
-    
-    int vertId = -1;
-    
-    for ( pIter.reset() ; !pIter.isDone() ; pIter.next() )
-    {
-        vertId = pIter.index();
-    }
-    
-    MGlobal::displayInfo(MString() + "[punchHole] Vert selected - vtx[" + vertId + "]" );
+	MSelectionList selection;
+	argData.getObjects( selection );
 
-  
-    
-    
+	if (selection.length() == 0)
+	{
+		MGlobal::displayWarning("[punchHoleNode] Select 1 vertex component only...");
+		return::MStatus::kSuccess;
+	}
+
+
+	// Global
+	MItSelectionList iter(selection);
+
+
+	MDagPath m_pathBaseMeshShape;
+	MObject component;
+	iter.getDagPath(m_pathBaseMeshShape, component);
+
+	MGlobal::displayInfo(MString() + m_pathBaseMeshShape.partialPathName());
+
+
+	MItMeshVertex pIter(m_pathBaseMeshShape, component, &status);
+
+	int vertId = -1;
+
+	for ( pIter.reset() ; !pIter.isDone() ; pIter.next() )
+	{
+		vertId = pIter.index();
+	}
+
+	MGlobal::displayInfo(MString() + "[punchHole] Vert selected - vtx[" + vertId + "]" );
+
+
+
+
 	if (vertId < 0)
 	{
 		MGlobal::displayWarning("[punchHoleNode] Only vertex component selection is allowed...");
 		return::MStatus::kSuccess;
 
 	}
-    
-    if (component.apiType() == MFn::kMeshVertComponent)
-    {
-        
-        
-        
-        
-        
-        
-        // Create locator
-        o_punchHoleNode = m_DEPNode.create("punchHole");
-        
-        MFnDependencyNode fnDep( o_punchHoleNode );
-        MPxCommand::setResult(fnDep.name());
-        
-        MPlug p_vertNum = fnDep.findPlug("vertNum");
-        p_vertNum.setInt( vertId );
-        
-        MPlug p_inMesh = fnDep.findPlug("inMesh");
-        MPlug p_outMesh = fnDep.findPlug("output");
-        
-        
-        
-        
-        
-        
-        MFnDagNode fnDepSource( m_pathBaseMeshShape.node() );
-        
-        
-        
-        
-        MPlug p_source_inMesh = fnDepSource.findPlug( "inMesh" );
-        
-        
-        if (p_source_inMesh.isConnected())
-        {
-            MPlug p_inMesh_source = p_source_inMesh;
-            
-            p_inMesh_source.selectAncestorLogicalIndex(0);
-            MPlugArray inputs_plugArr;
-            p_inMesh_source.connectedTo(inputs_plugArr, true, false);
-            p_inMesh_source = inputs_plugArr[0];
-            
-            MFnDependencyNode inMesh_dn(p_inMesh_source.node());
-            
-            MPlug p_outMesh_source = inMesh_dn.findPlug("output");
-            
-            
-            status = m_DGMod.connect( p_inMesh_source, p_inMesh );
-            CHECK_MSTATUS_AND_RETURN_IT(status);
-            
-            status = m_DGMod.disconnect( p_outMesh_source, p_source_inMesh );
-            CHECK_MSTATUS_AND_RETURN_IT(status);
-            
-            status = m_DGMod.connect( p_outMesh, p_source_inMesh );
-            CHECK_MSTATUS_AND_RETURN_IT(status);
-            
-            m_DGMod.doIt();
-            
-        }
-    }
-    
-    
-	MSelectionList currSel;
-	currSel.add(m_pathBaseMeshShape.partialPathName());
-	MGlobal::setActiveSelectionList(currSel, MGlobal::kReplaceList);
 
+	if (component.apiType() == MFn::kMeshVertComponent)
+	{
+
+
+
+
+
+
+		// Create locator
+		o_punchHoleNode = m_DEPNode.create("punchHole");
+
+		MFnDependencyNode fnDep( o_punchHoleNode );
+		MPxCommand::setResult(fnDep.name());
+
+		MPlug p_vertNum = fnDep.findPlug("vertNum");
+		p_vertNum.setInt( vertId );
+
+		MPlug p_node_inMesh = fnDep.findPlug("inMesh");
+		MPlug p_node_output = fnDep.findPlug("output");
+
+
+
+
+
+		MFnDagNode fnDepSource( m_pathBaseMeshShape.node() );
+
+		MPlug p_sourceMesh_worldMesh = fnDepSource.findPlug( "worldMesh" );
+		MPlug p_sourceMesh_inMesh = fnDepSource.findPlug( "inMesh" );
+
+
+		status = p_sourceMesh_worldMesh.selectAncestorLogicalIndex(0);
+		CHECK_MSTATUS_AND_RETURN_IT(status);
+
+
+
+
+		//status = m_DGMod.connect( p_sourceMesh_worldMesh, p_node_inMesh );
+		//CHECK_MSTATUS_AND_RETURN_IT(status);
+
+
+		if (p_sourceMesh_inMesh.isConnected())
+		{
+
+
+
+			MPlugArray inputs_plugArr;
+			p_sourceMesh_inMesh.connectedTo(inputs_plugArr, true, false, &status);
+			CHECK_MSTATUS_AND_RETURN_IT(status);
+
+
+
+
+			if (inputs_plugArr.length() != 0)
+			{
+
+
+
+				MPlug p_source_inMesh = inputs_plugArr[0];
+
+				MFnDependencyNode inMesh_dn(p_source_inMesh.node());
+
+				MPlug p_outMesh_source = inMesh_dn.findPlug("output", &status);
+				CHECK_MSTATUS_AND_RETURN_IT(status);
+
+
+				MGlobal::displayWarning(MString() + "[punchHoleNode] " + p_outMesh_source.name());
+
+				status = m_DGMod.disconnect( p_outMesh_source, p_sourceMesh_inMesh );
+				CHECK_MSTATUS_AND_RETURN_IT(status);
+
+
+
+
+
+				status = m_DGMod.connect( p_outMesh_source, p_node_inMesh );
+				CHECK_MSTATUS_AND_RETURN_IT(status);
+
+
+				status = m_DGMod.connect( p_node_output, p_sourceMesh_inMesh );
+				CHECK_MSTATUS_AND_RETURN_IT(status);
+
+
+				m_DGMod.doIt();
+			}
+
+
+
+
+
+		}
+
+
+		else
+		{
+
+
+			status = m_DGMod.connect( p_sourceMesh_worldMesh, p_node_inMesh );
+			CHECK_MSTATUS_AND_RETURN_IT(status);
+
+			status = m_DGMod.disconnect( p_sourceMesh_worldMesh, p_node_inMesh );
+			CHECK_MSTATUS_AND_RETURN_IT(status);
+
+
+			status = m_DGMod.connect( p_node_output, p_sourceMesh_inMesh );
+			CHECK_MSTATUS_AND_RETURN_IT(status);
+
+			m_DGMod.doIt();
+
+		}
+
+
+
+	}
+
+
+	MSelectionList currSel;
+	currSel.add(m_pathBaseMeshShape.partialPathName(&status));
+	CHECK_MSTATUS_AND_RETURN_IT(status);
+
+	status = MGlobal::setActiveSelectionList(currSel, MGlobal::kReplaceList);
+	CHECK_MSTATUS_AND_RETURN_IT(status);
 
 	return redoIt();
 }
-
 MStatus punchHoleCommand::redoIt()
 {
 	MStatus status;

@@ -792,7 +792,7 @@ MStatus punchHole::initialize()
 	aInMesh = tAttr.create("inMesh", "inMesh", MFnData::kMesh);
 	tAttr.setWritable(true);
 	tAttr.setReadable(false);
-	tAttr.setStorable(false);
+	tAttr.setStorable(true);
 	tAttr.setKeyable(false);
 	tAttr.setChannelBox(false);
 
