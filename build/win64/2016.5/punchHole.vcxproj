@@ -20,9 +20,10 @@
     <ClCompile Include="..\..\..\src\punchHole.cpp" />
   </ItemGroup>
   <ItemGroup>
+    <ClInclude Include="..\..\..\src\AETemplate.h" />
+    <ClInclude Include="..\..\..\src\icons.h" />
     <ClInclude Include="..\..\..\src\punchHoleCommand.h" />
     <ClInclude Include="..\..\..\src\punchHole.h" />
-    <ClInclude Include="\\nasiszerver\Backup_Programming\Maya\GitHub\Maya-plugins\punch_hole\src\AETemplate.h" />
   </ItemGroup>
   <PropertyGroup Label="Globals">
     <Keyword>Win32Proj</Keyword>

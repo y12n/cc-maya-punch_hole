@@ -37,9 +37,6 @@ MString mel_AETemplate()
 		"}\r\n";
 
 
-
-
-
 	return s_aeTemplate;
 
 }
@@ -47,54 +44,31 @@ MString mel_AETemplate()
 MString mel_createShelf()
 {
 
-	MString s_aeTemplate = MString() + "int $cc_doesShelfExist = `shelfLayout -query -ex \"CreativeCase\"`;\n" +
-		"if ($cc_doesShelfExist == 1)\n" +
-		"{\n" +
-		"    \n" +
-		"    string $shelfButtons[] = `shelfLayout -q -ca \"CreativeCase\"`;\n" +
-		"    \n" +
-		"    int $ex_b01,$ex_b02,$ex_b03 = 0;\n" +
-		"    \n" +
-		"    for( $i=0; $i<size($shelfButtons); ++$i )\n" +
-		"{\n" +
-		"    if( `control -exists $shelfButtons[$i]` == true)\n" +
-		"    {\n" +
-		"         if (`control -q -docTag $shelfButtons[$i]` == \"sm_createSmButton\") {$ex_b01 = 1;}\n" +
-		"         if (`control -q -docTag $shelfButtons[$i]` == \"sm_addSmButton\") {$ex_b02 = 1;}\n" +
-		"         if (`control -q -docTag $shelfButtons[$i]` == \"sm_createPlaneSmButton\") {$ex_b03 = 1;}\n" +
-		"    }\n" +
-		"    \n" +
-		"}\n" +
-		"if ($ex_b01 == 0) {shelfButton -p \"CreativeCase\" -dtg \"sm_createSmButton\" -annotation \"Add a ShellMod modifier to the selected objects\" -image1 \"shellModNode.png\" -command \"shellModCommand\";}\n" +
-		"if ($ex_b02 == 0) {shelfButton -p \"CreativeCase\" -dtg \"sm_addSmButton\" -annotation \"Add the objects to the first selected ShellMod node\" -image1 \"shellModNode_Add.png\" -command \"shellModCommand -a\";}\n" +
-		"if ($ex_b03 == 0) {shelfButton -p \"CreativeCase\" -dtg \"sm_createPlaneSmButton\" -annotation \"Creates a polygon plane with a ShellMod\" -image1 \"shellModNode_Plane.png\" -command \"polyPlane -sx 1 -sy 1 -w 5 -h 5;shellModCommand;move -y 1\";}\n" +
-		"    \n" +
-		"}\n" +
-		"if ($cc_doesShelfExist == false)\n" +
-		"{\n" +
-		"    shelfLayout -cellWidth 33 -cellHeight 33 -p $gShelfTopLevel CreativeCase;\n" +
-		"    shelfButton -p \"CreativeCase\" -dtg \"sm_createSmButton\" -annotation \"Add a ShellMod modifier to the selected objects\" -image1 \"shellModNode.png\" -command \"shellModCommand\";\n" +
-		"    shelfButton -p \"CreativeCase\" -dtg \"sm_addSmButton\" -annotation \"Add the objects to the first selected ShellMod node\" -image1 \"shellModNode_Add.png\" -command \"shellModCommand -a\";\n" +
-		"    shelfButton -p \"CreativeCase\" -dtg \"sm_createPlaneSmButton\" -annotation \"Creates a polygon plane with a ShellMod\" -image1 \"shellModNode_Plane.png\" -command \"polyPlane -sx 1 -sy 1 -w 5 -h 5;shellModCommand;move -y 1\";\n" +
-		"};\n";
+	MString s_aeTemplate = MString() + 
+		"int $cc_doesShelfExist = `shelfLayout -query -ex \"CreativeCase\"`;\r\n"
+		"if ($cc_doesShelfExist == 1)\r\n"
+		"{\r\n"
+		"	string $shelfButtons[] = `shelfLayout -q -ca \"CreativeCase\"`;\r\n"
+		"	int $ex_b01,$ex_b02 = 0;\r\n"
+		"	for( $i=0; $i<size($shelfButtons); ++$i )\r\n"
+		"	{\r\n"
+		"		if( `control -exists $shelfButtons[$i]` == true)\r\n"
+		"		{\r\n"
+		"			if (`control -q -docTag $shelfButtons[$i]` == \"ph_createPhButton\") {$ex_b01 = 1;}\r\n"
+		"		}\r\n"
+		"	}\r\n"
+		"	if ($ex_b01 == 0) {shelfButton -p \"CreativeCase\" -dtg \"ph_createPhButton\" -annotation \"Apply a Puncher modifier on the selected verts\" -image1 \"puncher.png\" -command \"punchHoleCommand\";}\r\n"
+		"}\r\n"
+		"	\r\n"
+		"if ($cc_doesShelfExist == false)\r\n"
+		"{\r\n"
+		"		shelfLayout -cellWidth 33 -cellHeight 33 -p $gShelfTopLevel CreativeCase;\r\n"
+		"		shelfButton -p \"CreativeCase\" -dtg \"ph_createPhButton\" -annotation \"Apply a Puncher modifier on the selected verts\" -image1 \"puncher.png\" -command \"punchHoleCommand\";\r\n"
+		"}\r\n";
+
 
 	return s_aeTemplate;
 }
 
-MString mel_deleteShelf()
-{
-
-	MString s_shelf = 
-		"int $cc_doesShelfExist;\
-		$cc_doesShelfExist = `shelfLayout -query -ex \"CreativeCase\"`;\
-		\
-		if ($cc_doesShelfExist == true)\
-		{\
-		deleteUI CreativeCase;\
-		}\
-		";
-
-	return s_shelf;
-}
 
 #endif

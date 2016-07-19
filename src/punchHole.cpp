@@ -729,7 +729,7 @@ MStatus punchHole::initialize()
 	eAttr.setStorable(true);
 	eAttr.addField("Custom", 0);
 	eAttr.addField("ChaserEdge 1%", 1);
-	eAttr.setDefault(0);
+	eAttr.setDefault(1);
 
 
 	// Vertex number to operate on
@@ -765,7 +765,7 @@ MStatus punchHole::initialize()
 	nAttr.setStorable(true);
 
 	aExtrusionOffset = nAttr.create("extrusionOffset", "extrusionOffset", MFnNumericData::kDouble);
-	nAttr.setDefault(0.0);
+	nAttr.setDefault(-0.5);
 	nAttr.setSoftMin(-0.5);
 	nAttr.setSoftMax(0.5);
 	nAttr.setKeyable(true);
@@ -779,7 +779,7 @@ MStatus punchHole::initialize()
 	nAttr.setStorable(true);
 
 	aRotate = nAttr.create( "rotate", "rotate", MFnNumericData::kDouble );
-	nAttr.setDefault(0.0);
+	nAttr.setDefault(-38.5);
 	nAttr.setSoftMin(-180.0);
 	nAttr.setSoftMax(180.0);
 	nAttr.setKeyable( true );

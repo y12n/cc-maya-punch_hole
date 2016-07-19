@@ -34,6 +34,11 @@
 #include <maya/MCallbackIdArray.h>
 
 #include <vector>
+
+//nclude <iostream>
+
+#include <fstream>
+
 using namespace std;
 
 class punchHole : public MPxNode

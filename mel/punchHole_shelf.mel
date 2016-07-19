@@ -9,16 +9,16 @@ if ($cc_doesShelfExist == 1)
 	{
 		if( `control -exists $shelfButtons[$i]` == true)
 		{
-			if (`control -q -docTag $shelfButtons[$i]` == "ph_createphButton") {$ex_b01 = 1;}
+			if (`control -q -docTag $shelfButtons[$i]` == "ph_createPhButton") {$ex_b01 = 1;}
 		}
 	}
 
-	if ($ex_b01 == 0) {shelfButton -p "CreativeCase" -dtg "ph_createphButton" -annotation "Apply a Puncher modifier on the selected verts" -image1 "punchHole.png" -command "punchHoleCommand";}
+	if ($ex_b01 == 0) {shelfButton -p "CreativeCase" -dtg "ph_createPhButton" -annotation "Apply a Puncher modifier on the selected verts" -image1 "puncher.png" -command "punchHoleCommand";}
 }
 
 	
 if ($cc_doesShelfExist == false)
 {
 		shelfLayout -cellWidth 33 -cellHeight 33 -p $gShelfTopLevel CreativeCase;
-		shelfButton -p "CreativeCase" -dtg "ph_createphButton" -annotation "Apply a Puncher modifier on the selected verts" -image1 "punchHole.png" -command "punchHoleCommand";
+		shelfButton -p "CreativeCase" -dtg "ph_createPhButton" -annotation "Apply a Puncher modifier on the selected verts" -image1 "puncher.png" -command "punchHoleCommand";
 }

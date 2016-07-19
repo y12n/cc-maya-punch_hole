@@ -119,6 +119,16 @@ MStatus punchHoleCommand::doIt( const MArgList& argList )
 	{
 		vertId = pIter.index();
 		status = pIter.numConnectedEdges(numConnectedEdges);
+
+
+			if (vertId < 0)
+	{
+		MGlobal::displayWarning("[punchHoleNode] Only vertex component selection is allowed...");
+		return::MStatus::kSuccess;
+
+	}
+
+
 	}
 
 	MGlobal::displayInfo(MString() + "[punchHole] Vert selected - vtx[" + vertId + "]" );
@@ -126,12 +136,7 @@ MStatus punchHoleCommand::doIt( const MArgList& argList )
 
 
 
-	if (vertId < 0)
-	{
-		MGlobal::displayWarning("[punchHoleNode] Only vertex component selection is allowed...");
-		return::MStatus::kSuccess;
 
-	}
 
 	if (component.apiType() == MFn::kMeshVertComponent)
 	{
@@ -156,6 +161,8 @@ MStatus punchHoleCommand::doIt( const MArgList& argList )
 		MPlug p_vertNum = fnDep.findPlug("vertNum", &status);
 		CHECK_MSTATUS_AND_RETURN_IT(status);
 		p_vertNum.setInt( vertId );
+
+
 
 		MPlug p_node_inMesh = fnDep.findPlug("inMesh", &status);
 		CHECK_MSTATUS_AND_RETURN_IT(status);

@@ -1,7 +1,11 @@
 #ifndef punchHoleCommand_H
 #define punchHoleCommand_H
 
-#include <maya/MArgDataBase.h>
+#ifdef __linux__ 
+	#include <maya/MArgDatabase.h>
+#else
+	#include <maya/MArgDataBase.h>
+#endif
 #include <maya/MDagPath.h>
 #include <maya/MDGModifier.h>
 #include <maya/MFnDagNode.h>

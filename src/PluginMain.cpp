@@ -25,10 +25,13 @@ MStatus initializePlugin(MObject obj)
 
 	icons_data_write();
 
-	MGlobal::executeCommand( mel_AETemplate() );
-	MGlobal::executeCommand( mel_createShelf() );
-
 	MFnPlugin fnPlugin(obj, "Creative Case", "0.1", "Any");
+
+	MGlobal::executeCommand( mel_createShelf() );
+	MGlobal::executeCommand( mel_AETemplate() );
+	
+
+	
 
 	status = fnPlugin.registerNode("punchHole", punchHole::id, punchHole::creator, punchHole::initialize);
 	CHECK_MSTATUS_AND_RETURN_IT(status);
