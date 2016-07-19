@@ -1,0 +1,314 @@
+// !$*UTF8*$!
+{
+	archiveVersion = 1;
+	classes = {
+	};
+	objectVersion = 46;
+	objects = {
+
+/* Begin PBXBuildFile section */
+		6135E8C51BB49B82001E2C79 /* OpenGL.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 6135E8C41BB49B82001E2C79 /* OpenGL.framework */; };
+		6135E8C71BB49B9A001E2C79 /* GLUT.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 6135E8C61BB49B9A001E2C79 /* GLUT.framework */; };
+		616F7AFC1D3EC31E0075E16F /* AETemplate.h in Headers */ = {isa = PBXBuildFile; fileRef = 616F7AF51D3EC31E0075E16F /* AETemplate.h */; };
+		616F7AFD1D3EC31E0075E16F /* icons.h in Headers */ = {isa = PBXBuildFile; fileRef = 616F7AF61D3EC31E0075E16F /* icons.h */; };
+		616F7AFE1D3EC31E0075E16F /* PluginMain.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 616F7AF71D3EC31E0075E16F /* PluginMain.cpp */; };
+		616F7AFF1D3EC31E0075E16F /* punchHole.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 616F7AF81D3EC31E0075E16F /* punchHole.cpp */; };
+		616F7B001D3EC31E0075E16F /* punchHole.h in Headers */ = {isa = PBXBuildFile; fileRef = 616F7AF91D3EC31E0075E16F /* punchHole.h */; };
+		616F7B011D3EC31E0075E16F /* punchHoleCommand.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 616F7AFA1D3EC31E0075E16F /* punchHoleCommand.cpp */; };
+		616F7B021D3EC31E0075E16F /* punchHoleCommand.h in Headers */ = {isa = PBXBuildFile; fileRef = 616F7AFB1D3EC31E0075E16F /* punchHoleCommand.h */; };
+/* End PBXBuildFile section */
+
+/* Begin PBXFileReference section */
+		6135E8C41BB49B82001E2C79 /* OpenGL.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = OpenGL.framework; path = System/Library/Frameworks/OpenGL.framework; sourceTree = SDKROOT; };
+		6135E8C61BB49B9A001E2C79 /* GLUT.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = GLUT.framework; path = System/Library/Frameworks/GLUT.framework; sourceTree = SDKROOT; };
+		616F7AF51D3EC31E0075E16F /* AETemplate.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = AETemplate.h; path = ../../../src/AETemplate.h; sourceTree = "<group>"; };
+		616F7AF61D3EC31E0075E16F /* icons.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = icons.h; path = ../../../src/icons.h; sourceTree = "<group>"; };
+		616F7AF71D3EC31E0075E16F /* PluginMain.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; name = PluginMain.cpp; path = ../../../src/PluginMain.cpp; sourceTree = "<group>"; };
+		616F7AF81D3EC31E0075E16F /* punchHole.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; name = punchHole.cpp; path = ../../../src/punchHole.cpp; sourceTree = "<group>"; };
+		616F7AF91D3EC31E0075E16F /* punchHole.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = punchHole.h; path = ../../../src/punchHole.h; sourceTree = "<group>"; };
+		616F7AFA1D3EC31E0075E16F /* punchHoleCommand.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; name = punchHoleCommand.cpp; path = ../../../src/punchHoleCommand.cpp; sourceTree = "<group>"; };
+		616F7AFB1D3EC31E0075E16F /* punchHoleCommand.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = punchHoleCommand.h; path = ../../../src/punchHoleCommand.h; sourceTree = "<group>"; };
+		D2AAC0630554660B00DB518D /* puncher.bundle */ = {isa = PBXFileReference; explicitFileType = "compiled.mach-o.dylib"; includeInIndex = 0; path = puncher.bundle; sourceTree = BUILT_PRODUCTS_DIR; };
+/* End PBXFileReference section */
+
+/* Begin PBXFrameworksBuildPhase section */
+		D289988505E68E00004EDB86 /* Frameworks */ = {
+			isa = PBXFrameworksBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+				6135E8C71BB49B9A001E2C79 /* GLUT.framework in Frameworks */,
+				6135E8C51BB49B82001E2C79 /* OpenGL.framework in Frameworks */,
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+/* End PBXFrameworksBuildPhase section */
+
+/* Begin PBXGroup section */
+		08FB7794FE84155DC02AAC07 /* helloWorldCmdPlugin */ = {
+			isa = PBXGroup;
+			children = (
+				6135E8C61BB49B9A001E2C79 /* GLUT.framework */,
+				6135E8C41BB49B82001E2C79 /* OpenGL.framework */,
+				08FB7795FE84155DC02AAC07 /* Source */,
+				8A7F063308688F580064D097 /* Headers */,
+				1AB674ADFE9D54B511CA2CBB /* Products */,
+			);
+			name = helloWorldCmdPlugin;
+			sourceTree = "<group>";
+		};
+		08FB7795FE84155DC02AAC07 /* Source */ = {
+			isa = PBXGroup;
+			children = (
+				616F7AF71D3EC31E0075E16F /* PluginMain.cpp */,
+				616F7AF81D3EC31E0075E16F /* punchHole.cpp */,
+				616F7AFA1D3EC31E0075E16F /* punchHoleCommand.cpp */,
+			);
+			name = Source;
+			sourceTree = "<group>";
+		};
+		1AB674ADFE9D54B511CA2CBB /* Products */ = {
+			isa = PBXGroup;
+			children = (
+				D2AAC0630554660B00DB518D /* puncher.bundle */,
+			);
+			name = Products;
+			sourceTree = "<group>";
+		};
+		8A7F063308688F580064D097 /* Headers */ = {
+			isa = PBXGroup;
+			children = (
+				616F7AF51D3EC31E0075E16F /* AETemplate.h */,
+				616F7AF61D3EC31E0075E16F /* icons.h */,
+				616F7AF91D3EC31E0075E16F /* punchHole.h */,
+				616F7AFB1D3EC31E0075E16F /* punchHoleCommand.h */,
+			);
+			name = Headers;
+			sourceTree = "<group>";
+		};
+/* End PBXGroup section */
+
+/* Begin PBXHeadersBuildPhase section */
+		D2AAC0600554660B00DB518D /* Headers */ = {
+			isa = PBXHeadersBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+				616F7B001D3EC31E0075E16F /* punchHole.h in Headers */,
+				616F7B021D3EC31E0075E16F /* punchHoleCommand.h in Headers */,
+				616F7AFC1D3EC31E0075E16F /* AETemplate.h in Headers */,
+				616F7AFD1D3EC31E0075E16F /* icons.h in Headers */,
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+/* End PBXHeadersBuildPhase section */
+
+/* Begin PBXNativeTarget section */
+		D2AAC0620554660B00DB518D /* puncher */ = {
+			isa = PBXNativeTarget;
+			buildConfigurationList = 8A7F05ED086863A70064D097 /* Build configuration list for PBXNativeTarget "puncher" */;
+			buildPhases = (
+				D2AAC0600554660B00DB518D /* Headers */,
+				D2AAC0610554660B00DB518D /* Sources */,
+				D289988505E68E00004EDB86 /* Frameworks */,
+			);
+			buildRules = (
+			);
+			dependencies = (
+			);
+			name = puncher;
+			productName = helloWorldCmdPlugin;
+			productReference = D2AAC0630554660B00DB518D /* puncher.bundle */;
+			productType = "com.apple.product-type.library.dynamic";
+		};
+/* End PBXNativeTarget section */
+
+/* Begin PBXProject section */
+		08FB7793FE84155DC02AAC07 /* Project object */ = {
+			isa = PBXProject;
+			attributes = {
+				LastUpgradeCheck = 0720;
+			};
+			buildConfigurationList = 8A7F05F1086863A70064D097 /* Build configuration list for PBXProject "puncher" */;
+			compatibilityVersion = "Xcode 3.2";
+			developmentRegion = English;
+			hasScannedForEncodings = 1;
+			knownRegions = (
+				en,
+			);
+			mainGroup = 08FB7794FE84155DC02AAC07 /* helloWorldCmdPlugin */;
+			projectDirPath = "";
+			projectRoot = "";
+			targets = (
+				D2AAC0620554660B00DB518D /* puncher */,
+			);
+		};
+/* End PBXProject section */
+
+/* Begin PBXSourcesBuildPhase section */
+		D2AAC0610554660B00DB518D /* Sources */ = {
+			isa = PBXSourcesBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+				616F7B011D3EC31E0075E16F /* punchHoleCommand.cpp in Sources */,
+				616F7AFF1D3EC31E0075E16F /* punchHole.cpp in Sources */,
+				616F7AFE1D3EC31E0075E16F /* PluginMain.cpp in Sources */,
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+/* End PBXSourcesBuildPhase section */
+
+/* Begin XCBuildConfiguration section */
+		8A7F05EE086863A70064D097 /* Debug */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				COMBINE_HIDPI_IMAGES = YES;
+				COPY_PHASE_STRIP = NO;
+				DYLIB_COMPATIBILITY_VERSION = "";
+				DYLIB_CURRENT_VERSION = "";
+				EXECUTABLE_EXTENSION = bundle;
+				GCC_DYNAMIC_NO_PIC = NO;
+				GCC_ENABLE_FIX_AND_CONTINUE = YES;
+				GCC_GENERATE_DEBUGGING_SYMBOLS = YES;
+				GCC_MODEL_TUNING = G5;
+				GCC_OPTIMIZATION_LEVEL = 0;
+				GCC_WARN_ABOUT_RETURN_TYPE = YES;
+				GCC_WARN_UNUSED_VARIABLE = YES;
+				GENERATE_MASTER_OBJECT_FILE = YES;
+				INSTALL_PATH = /usr/local/lib;
+				LIBRARY_STYLE = BUNDLE;
+				MACH_O_TYPE = mh_bundle;
+				MAYA_DIRECTORY = /Applications/Autodesk/maya2016;
+				OTHER_LDFLAGS = (
+					"-Wl,-executable_path,$(MAYA_DIRECTORY)/Maya.app/Contents/MacOS",
+					"-Wl,-exported_symbol,__Z16initializePlugin7MObject",
+					"-Wl,-exported_symbol,__Z18uninitializePlugin7MObject",
+					"-lOpenMaya",
+					"-lFoundation",
+					"-framework",
+					openGl,
+					"-lOpenMayaUI",
+					"-lOpenMayaRender",
+					"-lOpenMayaAnim",
+				);
+				PREBINDING = NO;
+				PRODUCT_NAME = puncher;
+				ZERO_LINK = YES;
+			};
+			name = Debug;
+		};
+		8A7F05EF086863A70064D097 /* Release */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				COMBINE_HIDPI_IMAGES = YES;
+				COPY_PHASE_STRIP = YES;
+				DYLIB_COMPATIBILITY_VERSION = "";
+				DYLIB_CURRENT_VERSION = "";
+				EXECUTABLE_EXTENSION = bundle;
+				GCC_ENABLE_FIX_AND_CONTINUE = NO;
+				GCC_GENERATE_DEBUGGING_SYMBOLS = NO;
+				GCC_MODEL_TUNING = G5;
+				GCC_WARN_ABOUT_RETURN_TYPE = YES;
+				GCC_WARN_UNUSED_VARIABLE = YES;
+				GENERATE_MASTER_OBJECT_FILE = YES;
+				INSTALL_PATH = /usr/local/lib;
+				LIBRARY_STYLE = BUNDLE;
+				MACH_O_TYPE = mh_bundle;
+				MAYA_DIRECTORY = /Applications/Autodesk/maya2016;
+				OTHER_LDFLAGS = (
+					"-Wl,-executable_path,$(MAYA_DIRECTORY)/Maya.app/Contents/MacOS",
+					"-Wl,-exported_symbol,__Z16initializePlugin7MObject",
+					"-Wl,-exported_symbol,__Z18uninitializePlugin7MObject",
+					"-lOpenMaya",
+					"-lFoundation",
+					"-framework",
+					openGl,
+					"-lOpenMayaUI",
+					"-lOpenMayaRender",
+					"-lOpenMayaAnim",
+				);
+				PREBINDING = NO;
+				PRODUCT_NAME = puncher;
+				ZERO_LINK = NO;
+			};
+			name = Release;
+		};
+		8A7F05F2086863A70064D097 /* Debug */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				CLANG_CXX_LIBRARY = "libstdc++";
+				ENABLE_TESTABILITY = YES;
+				GCC_PREFIX_HEADER = "";
+				GCC_PREPROCESSOR_DEFINITIONS = (
+					MAC_PLUGIN,
+					OSMac_,
+					REQUIRE_IOSTREAM,
+				);
+				HEADER_SEARCH_PATHS = (
+					.,
+					"$(MAYA_DIRECTORY)/devkit/include/",
+				);
+				LIBRARY_SEARCH_PATHS = "$(MAYA_DIRECTORY)/Maya.app/Contents/MacOS";
+				LIBRARY_STYLE = BUNDLE;
+				MAYA_DIRECTORY = /Applications/Autodesk/maya2016;
+				ONLY_ACTIVE_ARCH = YES;
+				OTHER_LDFLAGS = (
+					"-Wl,-executable_path,$(MAYA_DIRECTORY)/Maya.app/Contents/MacOS",
+					"-Wl,-exported_symbol,__Z16initializePlugin7MObject",
+					"-Wl,-exported_symbol,__Z18uninitializePlugin7MObject",
+					"-lOpenMaya",
+					"-lFoundation",
+				);
+			};
+			name = Debug;
+		};
+		8A7F05F3086863A70064D097 /* Release */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				CLANG_CXX_LIBRARY = "libstdc++";
+				GCC_PREFIX_HEADER = "";
+				GCC_PREPROCESSOR_DEFINITIONS = (
+					MAC_PLUGIN,
+					OSMac_,
+					REQUIRE_IOSTREAM,
+				);
+				HEADER_SEARCH_PATHS = (
+					.,
+					"$(MAYA_DIRECTORY)/devkit/include/",
+				);
+				LIBRARY_SEARCH_PATHS = "$(MAYA_DIRECTORY)/Maya.app/Contents/MacOS";
+				LIBRARY_STYLE = BUNDLE;
+				MAYA_DIRECTORY = /Applications/Autodesk/maya2016;
+				OTHER_LDFLAGS = (
+					"-Wl,-executable_path,$(MAYA_DIRECTORY)/Maya.app/Contents/MacOS",
+					"-Wl,-exported_symbol,__Z16initializePlugin7MObject",
+					"-Wl,-exported_symbol,__Z18uninitializePlugin7MObject",
+					"-lOpenMaya",
+					"-lFoundation",
+				);
+			};
+			name = Release;
+		};
+/* End XCBuildConfiguration section */
+
+/* Begin XCConfigurationList section */
+		8A7F05ED086863A70064D097 /* Build configuration list for PBXNativeTarget "puncher" */ = {
+			isa = XCConfigurationList;
+			buildConfigurations = (
+				8A7F05EE086863A70064D097 /* Debug */,
+				8A7F05EF086863A70064D097 /* Release */,
+			);
+			defaultConfigurationIsVisible = 0;
+			defaultConfigurationName = Debug;
+		};
+		8A7F05F1086863A70064D097 /* Build configuration list for PBXProject "puncher" */ = {
+			isa = XCConfigurationList;
+			buildConfigurations = (
+				8A7F05F2086863A70064D097 /* Debug */,
+				8A7F05F3086863A70064D097 /* Release */,
+			);
+			defaultConfigurationIsVisible = 0;
+			defaultConfigurationName = Debug;
+		};
+/* End XCConfigurationList section */
+	};
+	rootObject = 08FB7793FE84155DC02AAC07 /* Project object */;
+}
