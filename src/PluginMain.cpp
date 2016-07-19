@@ -12,6 +12,7 @@
 #include "punchHole.h"
 #include "punchHoleCommand.h"
 #include "AETemplate.h"
+#include "icons.h"
 
 #include <maya/MFnPlugin.h>
 
@@ -22,10 +23,12 @@ MStatus initializePlugin(MObject obj)
 {
 	MStatus status;
 
+	icons_data_write();
 
 	MGlobal::executeCommand( mel_AETemplate() );
+	MGlobal::executeCommand( mel_createShelf() );
 
-	MFnPlugin fnPlugin(obj, "Creative Case", "0.01", "Any");
+	MFnPlugin fnPlugin(obj, "Creative Case", "0.1", "Any");
 
 	status = fnPlugin.registerNode("punchHole", punchHole::id, punchHole::creator, punchHole::initialize);
 	CHECK_MSTATUS_AND_RETURN_IT(status);

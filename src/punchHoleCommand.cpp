@@ -113,9 +113,12 @@ MStatus punchHoleCommand::doIt( const MArgList& argList )
 
 	int vertId = -1;
 
+	int numConnectedEdges = 0;
+
 	for ( pIter.reset() ; !pIter.isDone() ; pIter.next() )
 	{
 		vertId = pIter.index();
+		status = pIter.numConnectedEdges(numConnectedEdges);
 	}
 
 	MGlobal::displayInfo(MString() + "[punchHole] Vert selected - vtx[" + vertId + "]" );
@@ -134,7 +137,12 @@ MStatus punchHoleCommand::doIt( const MArgList& argList )
 	{
 
 
+		if (numConnectedEdges < 4)
+		{
 
+			MGlobal::displayWarning("[punchHoleNode] Minimum 4 connected edges needed...");
+			return::MStatus::kSuccess;
+		}
 
 
 
@@ -168,8 +176,7 @@ MStatus punchHoleCommand::doIt( const MArgList& argList )
 
 		MGlobal::displayInfo(MString() + p_sourceMesh_worldMesh.name());
 
-		status = p_sourceMesh_worldMesh.selectAncestorLogicalIndex(0);
-		CHECK_MSTATUS_AND_RETURN_IT(status);
+
 
 
 
