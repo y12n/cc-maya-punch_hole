@@ -139,16 +139,20 @@ MStatus punchHoleCommand::doIt( const MArgList& argList )
 
 
 		// Create locator
-		o_punchHoleNode = m_DEPNode.create("punchHole");
+		o_punchHoleNode = m_DEPNode.create("punchHole", &status);
+		CHECK_MSTATUS_AND_RETURN_IT(status);
 
 		MFnDependencyNode fnDep( o_punchHoleNode );
 		MPxCommand::setResult(fnDep.name());
 
-		MPlug p_vertNum = fnDep.findPlug("vertNum");
+		MPlug p_vertNum = fnDep.findPlug("vertNum", &status);
+		CHECK_MSTATUS_AND_RETURN_IT(status);
 		p_vertNum.setInt( vertId );
 
-		MPlug p_node_inMesh = fnDep.findPlug("inMesh");
-		MPlug p_node_output = fnDep.findPlug("output");
+		MPlug p_node_inMesh = fnDep.findPlug("inMesh", &status);
+		CHECK_MSTATUS_AND_RETURN_IT(status);
+		MPlug p_node_output = fnDep.findPlug("output", &status);
+		CHECK_MSTATUS_AND_RETURN_IT(status);
 
 
 
@@ -156,9 +160,13 @@ MStatus punchHoleCommand::doIt( const MArgList& argList )
 
 		MFnDagNode fnDepSource( m_pathBaseMeshShape.node() );
 
-		MPlug p_sourceMesh_worldMesh = fnDepSource.findPlug( "worldMesh" );
-		MPlug p_sourceMesh_inMesh = fnDepSource.findPlug( "inMesh" );
+		MPlug p_sourceMesh_worldMesh = fnDepSource.findPlug( "worldMesh", &status );
+		CHECK_MSTATUS_AND_RETURN_IT(status);
+		MPlug p_sourceMesh_inMesh = fnDepSource.findPlug( "inMesh", &status );
+		CHECK_MSTATUS_AND_RETURN_IT(status);
 
+
+		MGlobal::displayInfo(MString() + p_sourceMesh_worldMesh.name());
 
 		status = p_sourceMesh_worldMesh.selectAncestorLogicalIndex(0);
 		CHECK_MSTATUS_AND_RETURN_IT(status);
