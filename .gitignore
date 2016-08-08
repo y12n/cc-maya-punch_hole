@@ -85,3 +85,13 @@ $RECYCLE.BIN/
 *.opensdf
 *.pdb
 *.suo
+
+*.xcworkspacedata
+
+*.xcuserstate
+
+*.xcsettings
+
+*.xcscheme
+
+*.plist
