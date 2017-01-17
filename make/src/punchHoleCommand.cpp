@@ -101,7 +101,7 @@ MStatus punchHoleCommand::doIt( const MArgList& argList )
 	MItSelectionList iter(selection);
 
 
-	MDagPath m_pathBaseMeshShape;
+
 	MObject component;
 	iter.getDagPath(m_pathBaseMeshShape, component);
 
@@ -304,14 +304,72 @@ MStatus punchHoleCommand::undoIt()
 {
 	MStatus status;
 
+
+
+	if ( !o_intermediate.isNull() )
+	{
+
+
+
+
+		MFnDependencyNode fnDep( o_intermediate );
+
+		MGlobal::displayInfo(MString() + "[punchHoleNode] Deleting intermediate node: " + fnDep.name());
+
+
+		MPlug p_inter_outMesh = fnDep.findPlug("outMesh", &status);
+		CHECK_MSTATUS_AND_RETURN_IT(status);
+
+		MFnDependencyNode fnDependNode( m_pathBaseMeshShape.node() );
+		MPlug p_mesh_inMesh = fnDependNode.findPlug("inMesh", &status);
+		CHECK_MSTATUS_AND_RETURN_IT(status);
+
+		MFnDependencyNode fnDep_node( o_punchHoleNode );
+		MPlug p_node_outMesh = fnDep_node.findPlug("output", &status);
+		CHECK_MSTATUS_AND_RETURN_IT(status);
+
+		//status = m_DGMod.disconnect( p_node_outMesh, p_mesh_inMesh );
+		//CHECK_MSTATUS_AND_RETURN_IT(status);
+
+
+
+		if ( !o_punchHoleNode.isNull() )
+		{
+
+			status = m_DAGMod.deleteNode(o_punchHoleNode);
+			CHECK_MSTATUS_AND_RETURN_IT(status);
+
+			m_DAGMod.doIt();
+
+
+		}
+
+
+		MGlobal::displayInfo(MString() + "[punchHoleNode] Trying to connect: " + p_inter_outMesh.name()  + " -> "+ p_mesh_inMesh.name());
+
+		status = m_DGMod.connect( p_inter_outMesh, p_mesh_inMesh );
+		CHECK_MSTATUS_AND_RETURN_IT(status);
+
+
+		status = m_DGMod.doIt();
+		CHECK_MSTATUS_AND_RETURN_IT(status);
+
+		status = m_DAGMod.deleteNode(o_intermediate);
+		CHECK_MSTATUS_AND_RETURN_IT(status);
+
+		status = m_DAGMod.doIt();
+		CHECK_MSTATUS_AND_RETURN_IT(status);
+
+	}
+
+
+
 	// Restore the initial state
 	status = m_DGMod.undoIt();
 	CHECK_MSTATUS_AND_RETURN_IT( status );
 
 	status = m_DAGMod.undoIt();
 	CHECK_MSTATUS_AND_RETURN_IT(status);
-
-
 
 	// Delete locator
 
@@ -328,18 +386,9 @@ MStatus punchHoleCommand::undoIt()
 
 	}
 
-	if ( !o_intermediate.isNull() )
-	{
-		MGlobal::displayInfo(MString() + "[punchHoleNode] Deleting intermediate");
 
 
-		status = m_DAGMod.deleteNode(o_intermediate);
-		CHECK_MSTATUS_AND_RETURN_IT(status);
 
-		m_DAGMod.doIt();
-
-
-	}
 
 
 	return MS::kSuccess;

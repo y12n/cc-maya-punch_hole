@@ -59,6 +59,8 @@ private:
 	MObject					o_outMesh;
 	MObject					o_intermediate;
 
+	MDagPath				m_pathBaseMeshShape;
+
 	MPlug					p_visibility;
 	MPlug					p_intermediateObject;
 

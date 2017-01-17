@@ -14,28 +14,30 @@
 
 MString mel_AETemplate()
 {
-	MString s_aeTemplate = MString() + "global proc AEpunchHoleTemplate( string $nodeName )\r\n"
-		"{\r\n"
-		"	editorTemplate -beginScrollLayout;\r\n"
-		"	editorTemplate -beginLayout \"Main control\" -collapse 0;\r\n"
-		"	editorTemplate -addControl \"offset\";\r\n"
-		"	editorTemplate -addControl \"rotate\";\r\n"
-		"	editorTemplate -addControl \"reverseOrder\";\r\n"
-		"	editorTemplate -endLayout;\r\n"
-		"	editorTemplate -beginLayout \"Profile\" -collapse 0;\r\n"
-		"	editorTemplate -addControl \"profilePresets\";\r\n"
-		"	editorTemplate -addControl \"extrusionCount\";\r\n"
-		"	editorTemplate -addControl \"extrusionOffset\";\r\n"
-		"	editorTemplate -addControl \"normalOffset\";\r\n"
-		"	editorTemplate -addControl \"srewDriveOffset\";\r\n"
-		"	editorTemplate -endLayout;\r\n"
-		"	editorTemplate -suppress \"inMesh\";\r\n"
-		"	editorTemplate -suppress \"outMesh\";\r\n"
-		"	editorTemplate -suppress \"vertNum\";\r\n"
-		"	AEdependNodeTemplate $nodeName;\r\n"
-		"	editorTemplate -addExtraControls;\r\n"
-		"	editorTemplate -endScrollLayout;\r\n"
-		"}\r\n";
+	MString s_aeTemplate = MString() + "global proc AEpunchHoleTemplate( string $nodeName )" +
+		"{" +
+		"	editorTemplate -beginScrollLayout;" +
+		"	editorTemplate -beginLayout \"Main control\" -collapse 0;" +
+		"	editorTemplate -addControl \"offset\";" +
+		"	editorTemplate -addControl \"rotate\";" +
+		"	editorTemplate -addControl \"reverseOrder\";" +
+		"	editorTemplate -endLayout;" +
+		"	editorTemplate -beginLayout \"Profile\" -collapse 0;" +
+		"	editorTemplate -addControl \"profilePresets\";" +
+		"	editorTemplate -addControl \"extrusionCount\";" +
+		"	editorTemplate -addControl \"extrusionOffset\";" +
+		"	editorTemplate -addControl \"normalOffset\";" +
+		"	" +
+		"	AEaddRampControl( $nodeName + \".extrudeRamp\" );" +
+		"	" +
+		"	editorTemplate -endLayout;" +
+		"	editorTemplate -suppress \"inMesh\";" +
+		"	editorTemplate -suppress \"outMesh\";" +
+		"	editorTemplate -suppress \"vertNum\";" +
+		"	AEdependNodeTemplate $nodeName;" +
+		"	editorTemplate -addExtraControls;" +
+		"	editorTemplate -endScrollLayout;" +
+		"}";
 
 
 	return s_aeTemplate;

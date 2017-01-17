@@ -26,6 +26,7 @@
 #include <maya/MFnTypedAttribute.h>
 #include <maya/MFnSingleIndexedComponent.h>
 #include <maya/MEulerRotation.h>
+#include <maya/MRampAttribute.h>
 
 #include <maya/MPlugArray.h>
 
@@ -59,6 +60,8 @@ public:
 //    static void					aboutToDeleteCB( MObject& node, MDGModifier& modifier, void* clientData );
 //    
     
+	MFloatArray					storeProfileCurveData(MRampAttribute a_segmentsAttribute);
+
 	static MTypeId id;
 
 	static MObject              aInMesh;
@@ -73,6 +76,7 @@ public:
 	static MObject              aNormalOffset;
 	static MObject              aProfilePresets;
 	static MObject              aReverseOrder;
+	static MObject				aExtrudeRamp;
 //
 //private:
 //    MCallbackIdArray			m_callbackIDs;

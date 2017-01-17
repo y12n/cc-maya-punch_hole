@@ -14,6 +14,7 @@ MObject		punchHole::aTaper;
 MObject		punchHole::aNormalOffset;
 MObject		punchHole::aProfilePresets;
 MObject		punchHole::aReverseOrder;
+MObject		punchHole::aExtrudeRamp;
 
 
 punchHole::punchHole()
@@ -37,6 +38,34 @@ void punchHole::postConstructor()
 {
 	MStatus status;
 
+
+}
+
+MFloatArray punchHole::storeProfileCurveData(MRampAttribute a_segmentsAttribute)
+{
+	MStatus status;
+
+	MFloatArray curve_segments_values, curve_segments_values_loop;
+
+	int segments = a_segmentsAttribute.getNumEntries();
+
+
+	if (segments > 0)
+	{
+		for (int i = 0; i < segments; i++)
+		{
+			float rampPosition = (1.0f / float(segments)) * float(i);
+			float curveRampValue;
+			a_segmentsAttribute.getValueAtPosition(rampPosition, curveRampValue, &status);
+			CHECK_MSTATUS(status);
+			curve_segments_values.append(curveRampValue);
+
+		}
+	}
+
+
+
+	return curve_segments_values;
 
 }
 
@@ -78,6 +107,10 @@ MStatus punchHole::compute(const MPlug& plug, MDataBlock& data)
 
 
 
+	// Ramp attribute
+	MRampAttribute a_strandsOffsetAttribute(this->thisMObject(), aExtrudeRamp, &status);
+	CHECK_MSTATUS_AND_RETURN_IT(status);
+	//MFloatArray m_extrudeProfileA = storeProfileCurveData(a_strandsOffsetAttribute);
 
 
 	// Convert rotateion to euler
@@ -131,12 +164,133 @@ MStatus punchHole::compute(const MPlug& plug, MDataBlock& data)
 
 	if (m_profilePreset == 5)
 	{
-		float pos [8] = { 0.1f,0.15f,0.5f,0.5f,0.5f,0.55f,0.9f, 1.0f };
-		float val [8] = { 0.1f,0.5f, 0.5f,0.2f,0.15f,0.15f,0.15f, 0.0f};
-		float off [8] = { 0.05f,0.0f, 0.0f,0.05f,0.1f,0.02f,0.0f, 0.02f};
-		m_curve_positions = MFloatArray( pos, (sizeof(pos)/sizeof(*pos)) );
-		m_curve_values = MFloatArray( val, (sizeof(val)/sizeof(*val)));
-		m_curve_offset = MFloatArray( off, (sizeof(off)/sizeof(*off)));
+		//float pos [8] = { 0.1f,0.15f,0.5f,0.5f,0.5f,0.55f,0.9f, 1.0f };
+		//float val [8] = { 0.1f,0.5f, 0.5f,0.2f,0.15f,0.15f,0.15f, 0.0f};
+		//float off [8] = { 0.05f,0.0f, 0.0f,0.05f,0.1f,0.02f,0.0f, 0.02f};
+		//m_curve_positions = MFloatArray( pos, (sizeof(pos)/sizeof(*pos)) );
+		//m_curve_values = MFloatArray( val, (sizeof(val)/sizeof(*val)));
+		//m_curve_offset = MFloatArray( off, (sizeof(off)/sizeof(*off)));
+
+		m_curve_positions.clear();
+		m_curve_values.clear();
+		m_curve_offset.clear();
+
+		MIntArray indexes;
+		MFloatArray positions;
+		MFloatArray values;
+		MIntArray interps;
+
+
+
+
+
+
+
+		a_strandsOffsetAttribute.getEntries(indexes,positions,values,interps, &status);
+		CHECK_MSTATUS_AND_RETURN_IT(status);
+
+
+
+
+
+
+		// Bubble Sort array
+
+		float swapHolder_pos = -1.0;
+		float swapHolder_val = -1.0;
+		int aend = positions.length()-1;
+		int alength = aend;
+
+		for (int c = alength-1; c > 0; c--)
+		{
+			for (int i = 0; i < aend; i++)
+			{
+				if (positions[i] > positions[ i + 1 ])
+				{
+					swapHolder_pos = positions[i + 1];
+					positions[i + 1] = positions[i];
+					positions[i] = swapHolder_pos;
+
+					swapHolder_val = values[i + 1];
+					values[i + 1] = values[i];
+					values[i] = swapHolder_val;
+				}
+			}
+
+			aend --;
+		}
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+		if (positions.length() > 0)
+		{
+			/*		float interp_val = float(extrusionOffset) / positions.length();
+			float pos_interp_val = 0;*/
+
+			float extrude_val = 0.0f;
+			float last_extrude_val = 0.0f;
+
+			for (int i = 0; i < positions.length(); i++)
+			{
+
+				extrude_val = (last_extrude_val - (values[i]-0.5f));
+
+				if (extrusionOffset > 0.0)
+				{
+					float c_var = float(extrusionOffset) * positions[i];
+					m_curve_positions.append(c_var);
+				}
+
+				else
+				{
+					float c_var = -(float(extrusionOffset) * positions[i]);
+					m_curve_positions.append(c_var);
+				}
+
+
+				m_curve_values.append(0.0f);
+				m_curve_offset.append(extrude_val);
+
+				last_extrude_val = values[i]-0.5f;
+
+
+				/*		pos_interp_val += interp_val;
+				*/
+			}
+
+
+
+			//if (extrusionOffset > 0.0)
+			//{
+			//	float c_var = float(extrusionOffset);
+			//	m_curve_positions.append(c_var);
+			//}
+
+			//else
+			//{
+			//	float c_var = -(float(extrusionOffset));
+			//	m_curve_positions.append(c_var);
+			//}
+
+			//m_curve_values.append(0.0f);
+			//m_curve_offset.append(0.0f);
+
+		}
+
+
+
+
 	}
 
 	// Base Arrays
@@ -775,9 +929,10 @@ MStatus punchHole::initialize()
 {
 	MStatus status;
 
-	MFnNumericAttribute nAttr;
-	MFnTypedAttribute tAttr;
-	MFnEnumAttribute eAttr;
+	MFnNumericAttribute		nAttr;
+	MFnTypedAttribute		tAttr;
+	MFnEnumAttribute		eAttr;
+	MRampAttribute			rAttr;
 
 
 	aProfilePresets = eAttr.create( "profilePresets", "profilePresets", 0);
@@ -869,6 +1024,10 @@ MStatus punchHole::initialize()
 	tAttr.setKeyable(false);
 	tAttr.setChannelBox(false);;
 
+	aExtrudeRamp = rAttr.createCurveRamp("extrudeRamp", "extrudeRamp");
+	addAttribute(aExtrudeRamp);
+
+
 	addAttribute(aInMesh);
 	addAttribute(aOutMesh);
 	addAttribute(aVertNum);
@@ -881,6 +1040,7 @@ MStatus punchHole::initialize()
 	addAttribute(aNormalOffset);
 	addAttribute(aProfilePresets);
 	addAttribute(aReverseOrder);
+	addAttribute(aExtrudeRamp);
 
 	attributeAffects(aInMesh, aOutMesh);
 	attributeAffects(aVertNum, aOutMesh);
@@ -893,7 +1053,7 @@ MStatus punchHole::initialize()
 	attributeAffects(aScrewDriveOffset, aOutMesh);
 	attributeAffects(aProfilePresets, aOutMesh);
 	attributeAffects(aReverseOrder, aOutMesh);
-
+	attributeAffects(aExtrudeRamp, aOutMesh);
 
 	return MS::kSuccess;
 }
