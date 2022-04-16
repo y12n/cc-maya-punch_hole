@@ -97,3 +97,6 @@ $RECYCLE.BIN/
 
 *.plist
 *.suo
+
+.vs
+/make/out
